@@ -29,7 +29,7 @@ print(predict_date)
 
 # mkdir /data1/temperedheroes/TH_prechurn_data_compressed
 # mkdir /data1/temperedheroes/TH_prechurn_data_extracted
-cmd = f"~/data/myenv/bin/coscmd -c /data/configcenter/data/data_bigdata/cos_config_prechurn_v2.ini download -f th_prechurn/prechurn_data_{predict_date}.tar.gz /home/user_00/data/temperedheroes/TH_prechurn_data_compressed/prechurn_data_{predict_date}.tar.gz"
+cmd = f"~/***/coscmd -c /***/cos_config_prechurn_v2.ini download -f th_prechurn/prechurn_data_{predict_date}.tar.gz ***/TH_prechurn_data_compressed/prechurn_data_{predict_date}.tar.gz"
 ret = os.system(cmd)
 print(f"下载命令执行返回码: {ret}")
 if ret != 0:
@@ -38,7 +38,7 @@ if ret != 0:
 
 
 # 所有压缩包的路径列表
-tar_files = [f'/home/user_00/data/temperedheroes/TH_prechurn_data_compressed/prechurn_data_{predict_date}.tar.gz']
+tar_files = [f'***/TH_prechurn_data_compressed/prechurn_data_{predict_date}.tar.gz']
 
 for tar_gz_file in tar_files:
     print(tar_gz_file)
@@ -49,12 +49,12 @@ for tar_gz_file in tar_files:
     
     # 打开并解压
     with tarfile.open(tar_gz_file, 'r:gz') as tar:
-        tar.extractall(path=f'/home/user_00/data/temperedheroes/TH_prechurn_data_extracted')
+        tar.extractall(path=f'***/TH_prechurn_data_extracted')
 
 
 # 设置CSV文件所在的文件夹路径
 # folder_path = f'/data/TH_prechurn_predict_data/prechurn_data_{run_date}'
-folder_path = f'/home/user_00/data/temperedheroes/TH_prechurn_data_extracted'
+folder_path = f'***/TH_prechurn_data_extracted'
 # 获取所有CSV文件
 csv_files = [f for f in os.listdir(folder_path) if f.endswith(f'_{predict_date}_train.csv')]
 print(csv_files)
@@ -224,8 +224,8 @@ def model_params(df_t, group_label):
 
     # 1.11将scaler、模型参数、模型预测正类的结果保存为json
     report = classification_report(y_test, y_pred, output_dict=True)
-    model_path = f"//home/user_00/data/temperedheroes/TH_prechurn_feature_data/{predict_date}_xgb_model_{group_label}.json"
-    # cmd_upload = f"/home/user_00/.local/bin/coscmd -c /data/configcenter/data/data_bigdata/cos_config_prechurn.ini  upload {model_path} /th_prechurn/"
+    model_path = f"/***/TH_prechurn_feature_data/{predict_date}_xgb_model_{group_label}.json"
+    # cmd_upload = f"/home/user_00/.local/bin/coscmd -c /***/cos_config_prechurn.ini  upload {model_path} /th_prechurn/"
     # print(cmd_upload)
     model.save_model(model_path)
     # os.system(cmd_upload)
