@@ -25,7 +25,7 @@ args = parser.parse_args()
 run_date = args.run_date
 
 # cos上拉取预测数据集
-cmd = f"~/data/myenv/bin/coscmd -c /data/configcenter/data/data_bigdata/cos_config_prechurn_v2.ini download -f th_prechurn/predict_data_{run_date}.tar.gz /home/user_00/data/temperedheroes/TH_prechurn_data_compressed/predict_data_{run_date}.tar.gz"
+cmd = f"~***/cos_config_prechurn_v2.ini download -f th_prechurn/predict_data_{run_date}.tar.gz ***/TH_prechurn_data_compressed/predict_data_{run_date}.tar.gz"
 ret = os.system(cmd)
 print(f"下载命令执行返回码: {ret}")
 if ret != 0:
@@ -33,8 +33,8 @@ if ret != 0:
     exit(1)
 
 # 文件路径和目标目录
-tar_gz_path = f"/home/user_00/data/temperedheroes/TH_prechurn_data_compressed/predict_data_{run_date}.tar.gz"
-extract_dir = "/home/user_00/data/temperedheroes/TH_prechurn_data_extracted"
+tar_gz_path = f"***/TH_prechurn_data_compressed/predict_data_{run_date}.tar.gz"
+extract_dir = "***/TH_prechurn_data_extracted"
 
 print(f"Extracting: {tar_gz_path} → {extract_dir}/")
 
@@ -45,7 +45,7 @@ with tarfile.open(tar_gz_path, "r:gz") as tar:
 print("Done.")
 
 # 设置CSV文件所在的文件夹路径
-folder_path = f'/home/user_00/data/temperedheroes/TH_prechurn_data_extracted/th_prechurn_{run_date}_predict.csv'
+folder_path = f'***/TH_prechurn_data_extracted/th_prechurn_{run_date}_predict.csv'
 predict_df = pd.read_csv(folder_path)
 
 # 只转换数值型列，避免炸内核
@@ -105,9 +105,9 @@ def load_config_and_predict(group_label,df_r):
     feature_names = config["scaler"]["feature_names"]
 
     # cos拉取模型json文件
-    # cmd_download = f"/usr/local/service/anaconda3/envs/datacenter/bin/coscmd -c /data/configcenter/data/data_bigdata/cos_config_prechurn.ini download -f th_prechurn/{run_date}_xgb_model_{group_label}.bin /data/logs/TH_prechurn_feature_data/{run_date}_xgb_model_{group_label}.bin"
+    # cmd_download = f"/***/coscmd -c ****/cos_config_prechurn.ini download -f th_prechurn/{run_date}_xgb_model_{group_label}.bin /data/logs/TH_prechurn_feature_data/{run_date}_xgb_model_{group_label}.bin"
     # os.system(cmd_download)
-    model_path=f'/home/user_00/data/temperedheroes/TH_prechurn_feature_data/{run_date}_xgb_model_{group_label}.json'
+    model_path=f'***/{run_date}_xgb_model_{group_label}.json'
     model = XGBClassifier()
     model.load_model(model_path)
 
@@ -153,10 +153,10 @@ else:
     print(f"log_date 列有 {len(unique_dates)} 个唯一值: {unique_dates}")
 
 # 预测结果文件路径
-csv_path = f"/home/user_00/data/temperedheroes/TH_prechurn_predict_result/predict_result_{formatted_date}.csv"
+csv_path = f"***/TH_prechurn_predict_result/predict_result_{formatted_date}.csv"
 
 # 预测结果压缩包路径
-tar_gz_path = f"/home/user_00/data/temperedheroes/TH_prechurn_predict_result/predict_result_{formatted_date}.tar.gz"
+tar_gz_path = f"****/TH_prechurn_predict_result/predict_result_{formatted_date}.tar.gz"
 
 # 创建预测结果压缩文件
 with tarfile.open(tar_gz_path, "w:gz") as tar:
@@ -165,6 +165,6 @@ with tarfile.open(tar_gz_path, "w:gz") as tar:
 
 print(f"✅ 压缩完成：{tar_gz_path}")
 
-cmd_upload = f"~/data/myenv/bin/coscmd -c /data/configcenter/data/data_bigdata/cos_config_prechurn_v2.ini  upload {tar_gz_path} /th_prechurn/"
+cmd_upload = f"~***/coscmd -c /***/cos_config_prechurn_v2.ini  upload {tar_gz_path} /th_prechurn/"
 print(cmd_upload)
 os.system(cmd_upload)
