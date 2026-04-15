@@ -18,7 +18,7 @@ def ssh_start_execute(ssh_client, cmd):
 def ssh_execute(ip, cmd):
     private_key = paramiko.RSAKey.from_private_key_file('/home/user_00/.ssh/id_rsa')
     transport = paramiko.Transport((ip, 22))
-    transport.connect(username='user_00', pkey=private_key)
+    transport.connect(username='***', pkey=***)
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh._transport = transport
@@ -57,8 +57,8 @@ if __name__ == '__main__':
     parser.add_argument("--run_date", required=True, help="调度运行日期，例如 20250302")
     args = parser.parse_args()
     run_date = args.run_date
-    cmd = f"~/data/myenv/bin/python /home/user_00/data/temperedheroes/prechurn_script/train_python_hw.py --run_date {run_date}"
+    cmd = f"~***/train_python_hw.py --run_date {run_date}"
     print(cmd)
-    ip = "192.168.1.30"
+    ip = "***"
     ssh_execute(ip, cmd)
     print("--------------训练完成！----------------")
