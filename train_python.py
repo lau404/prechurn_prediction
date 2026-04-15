@@ -271,13 +271,7 @@ def model_params(df_t, group_label):
 
 # 写入 MySQL
 def write_model_config_to_mysql(model_config, group_label, predict_date):
-    conn = pymysql.connect(
-        host='172.21.102.40',      # 主机
-        user='data',      # 用户名
-        port=3306,            #端口
-        password='USzBmz5BKUcrUJ#L9uBU',  # 密码
-        db='dw_etl_data_statistics',          # 数据库名
-        charset='utf8mb4'
+    conn = pymysql.connect(# 账户、密码登
     )
     cursor = conn.cursor()
 
