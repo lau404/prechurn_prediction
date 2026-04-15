@@ -81,13 +81,7 @@ df_r_3 = data_real[(data_real['register_day'] >= 30)]
 
 # 从 MySQL 读取模型配置并建模
 def load_config_and_predict(group_label,df_r):
-    conn = pymysql.connect(
-    host='172.21.102.40',
-    user='data',
-    port=3306,       
-    password='USzBmz5BKUcrUJ#L9uBU',
-    db='dw_etl_data_statistics',
-    charset='utf8mb4')
+    conn = pymysql.connect(# 账号、密码等)
     
     cursor = conn.cursor()
     sql = "SELECT config_json FROM t_prechurn_model_configs WHERE group_label = %s ORDER BY created_at DESC LIMIT 1"
